@@ -15,9 +15,9 @@ namespace ClientManagementSystem.BAL.Services
             _addressRepository = new AddressRepository(connectionString);
         }
 
-        public void AddAddress(Address Address)
+        public int AddAddress(Address Address)
         {
-            _addressRepository.AddAddress(Address);
+            return _addressRepository.AddAddress(Address);
         }
 
         public Address GetAddress(int addressId)

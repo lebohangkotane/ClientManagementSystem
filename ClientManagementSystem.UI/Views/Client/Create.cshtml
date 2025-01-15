@@ -49,19 +49,47 @@
             </div>
         </div>
 
-        <h4>Addresses</h4> 
-        @for (int i = 0; i < Model.Addresses.Count(); i++)
-         {
+        <br />
+
+
+        @{
+            int i = 0;
+            List<ClientManagementSystem.UI.ClientManagementServiceReference.ContactType> contactTypes = ViewBag.ContactTypes;
+        }
+
+        <h5>Addresses</h5>
+
+        @foreach (var addressType in Model.AddressTypes)
+        {
+            @Html.HiddenFor(m => m.AddressTypes[i].AddressTypeId)
             <div class="form-group">
-                @Html.LabelFor(m => m.AddressTypes[i], htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label(addressType.TypeName, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(m => m.AddressTypes[i], new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(m => m.AddressTypes[i], "", new { @class = "text-danger" })
+                    @Html.EditorFor(m => m.Addresses[i].AddressDetail, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.Addresses[i].AddressDetail, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <!-- Repeat similar blocks for AddressLine1, AddressLine2, City, State, ZipCode -->
-         }
 
+            i++;
+        }
+
+        <br />
+
+        <h5>Contact Information</h5>
+        @foreach (var contactType in contactTypes)
+        {
+
+            <div class="form-group">
+                @Html.Label(contactType.TypeName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => m.ContactInfos[i].ContactDetail, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.Addresses[i].AddressDetail, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            i++;
+        }
+        <br />
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-primary" />

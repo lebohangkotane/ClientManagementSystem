@@ -8,7 +8,7 @@ namespace ClientManagementSystem.Service
     public interface IClientManagementService
     {
         [OperationContract]
-        void AddClient(Client client);
+        int AddClient(Client client);
 
         [OperationContract]
         Client GetClient(int clientId);
@@ -24,7 +24,7 @@ namespace ClientManagementSystem.Service
 
 
         [OperationContract]
-        void AddAddress(Address address);
+        int AddAddress(Address address);
 
         [OperationContract]
         Address GetAddress(int addressId);
@@ -43,5 +43,24 @@ namespace ClientManagementSystem.Service
 
         [OperationContract]
         void DeleteAddress(int addressId);
+
+
+        [OperationContract]
+        int AddContact(ContactInfo contact);
+
+        [OperationContract]
+        ContactInfo GetContact(int contactInfoId);
+
+        [OperationContract]
+        List<ContactInfo> GetAllContacts();
+
+        [OperationContract]
+        void UpdateContact(ContactInfo contact);
+
+        [OperationContract]
+        void DeleteContact(int contactInfoId);
+
+        [OperationContract]
+        List<ContactType> GetAllContactTypes();
     }
 }

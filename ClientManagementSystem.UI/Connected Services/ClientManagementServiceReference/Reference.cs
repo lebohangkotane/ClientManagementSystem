@@ -595,10 +595,10 @@ namespace ClientManagementSystem.UI.ClientManagementServiceReference {
     public interface IClientManagementService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/AddClient", ReplyAction="http://tempuri.org/IClientManagementService/AddClientResponse")]
-        void AddClient(ClientManagementSystem.UI.ClientManagementServiceReference.Client client);
+        int AddClient(ClientManagementSystem.UI.ClientManagementServiceReference.Client client);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/AddClient", ReplyAction="http://tempuri.org/IClientManagementService/AddClientResponse")]
-        System.Threading.Tasks.Task AddClientAsync(ClientManagementSystem.UI.ClientManagementServiceReference.Client client);
+        System.Threading.Tasks.Task<int> AddClientAsync(ClientManagementSystem.UI.ClientManagementServiceReference.Client client);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/GetClient", ReplyAction="http://tempuri.org/IClientManagementService/GetClientResponse")]
         ClientManagementSystem.UI.ClientManagementServiceReference.Client GetClient(int clientId);
@@ -625,10 +625,10 @@ namespace ClientManagementSystem.UI.ClientManagementServiceReference {
         System.Threading.Tasks.Task DeleteClientAsync(int clientId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/AddAddress", ReplyAction="http://tempuri.org/IClientManagementService/AddAddressResponse")]
-        void AddAddress(ClientManagementSystem.UI.ClientManagementServiceReference.Address address);
+        int AddAddress(ClientManagementSystem.UI.ClientManagementServiceReference.Address address);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/AddAddress", ReplyAction="http://tempuri.org/IClientManagementService/AddAddressResponse")]
-        System.Threading.Tasks.Task AddAddressAsync(ClientManagementSystem.UI.ClientManagementServiceReference.Address address);
+        System.Threading.Tasks.Task<int> AddAddressAsync(ClientManagementSystem.UI.ClientManagementServiceReference.Address address);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/GetAddress", ReplyAction="http://tempuri.org/IClientManagementService/GetAddressResponse")]
         ClientManagementSystem.UI.ClientManagementServiceReference.Address GetAddress(int addressId);
@@ -665,6 +665,42 @@ namespace ClientManagementSystem.UI.ClientManagementServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/DeleteAddress", ReplyAction="http://tempuri.org/IClientManagementService/DeleteAddressResponse")]
         System.Threading.Tasks.Task DeleteAddressAsync(int addressId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/AddContact", ReplyAction="http://tempuri.org/IClientManagementService/AddContactResponse")]
+        int AddContact(ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo contact);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/AddContact", ReplyAction="http://tempuri.org/IClientManagementService/AddContactResponse")]
+        System.Threading.Tasks.Task<int> AddContactAsync(ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo contact);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/GetContact", ReplyAction="http://tempuri.org/IClientManagementService/GetContactResponse")]
+        ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo GetContact(int contactInfoId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/GetContact", ReplyAction="http://tempuri.org/IClientManagementService/GetContactResponse")]
+        System.Threading.Tasks.Task<ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo> GetContactAsync(int contactInfoId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/GetAllContacts", ReplyAction="http://tempuri.org/IClientManagementService/GetAllContactsResponse")]
+        System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo> GetAllContacts();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/GetAllContacts", ReplyAction="http://tempuri.org/IClientManagementService/GetAllContactsResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo>> GetAllContactsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/UpdateContact", ReplyAction="http://tempuri.org/IClientManagementService/UpdateContactResponse")]
+        void UpdateContact(ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo contact);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/UpdateContact", ReplyAction="http://tempuri.org/IClientManagementService/UpdateContactResponse")]
+        System.Threading.Tasks.Task UpdateContactAsync(ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo contact);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/DeleteContact", ReplyAction="http://tempuri.org/IClientManagementService/DeleteContactResponse")]
+        void DeleteContact(int contactInfoId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/DeleteContact", ReplyAction="http://tempuri.org/IClientManagementService/DeleteContactResponse")]
+        System.Threading.Tasks.Task DeleteContactAsync(int contactInfoId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/GetAllContactTypes", ReplyAction="http://tempuri.org/IClientManagementService/GetAllContactTypesResponse")]
+        System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.ContactType> GetAllContactTypes();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/GetAllContactTypes", ReplyAction="http://tempuri.org/IClientManagementService/GetAllContactTypesResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.ContactType>> GetAllContactTypesAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -694,11 +730,11 @@ namespace ClientManagementSystem.UI.ClientManagementServiceReference {
                 base(binding, remoteAddress) {
         }
         
-        public void AddClient(ClientManagementSystem.UI.ClientManagementServiceReference.Client client) {
-            base.Channel.AddClient(client);
+        public int AddClient(ClientManagementSystem.UI.ClientManagementServiceReference.Client client) {
+            return base.Channel.AddClient(client);
         }
         
-        public System.Threading.Tasks.Task AddClientAsync(ClientManagementSystem.UI.ClientManagementServiceReference.Client client) {
+        public System.Threading.Tasks.Task<int> AddClientAsync(ClientManagementSystem.UI.ClientManagementServiceReference.Client client) {
             return base.Channel.AddClientAsync(client);
         }
         
@@ -734,11 +770,11 @@ namespace ClientManagementSystem.UI.ClientManagementServiceReference {
             return base.Channel.DeleteClientAsync(clientId);
         }
         
-        public void AddAddress(ClientManagementSystem.UI.ClientManagementServiceReference.Address address) {
-            base.Channel.AddAddress(address);
+        public int AddAddress(ClientManagementSystem.UI.ClientManagementServiceReference.Address address) {
+            return base.Channel.AddAddress(address);
         }
         
-        public System.Threading.Tasks.Task AddAddressAsync(ClientManagementSystem.UI.ClientManagementServiceReference.Address address) {
+        public System.Threading.Tasks.Task<int> AddAddressAsync(ClientManagementSystem.UI.ClientManagementServiceReference.Address address) {
             return base.Channel.AddAddressAsync(address);
         }
         
@@ -788,6 +824,54 @@ namespace ClientManagementSystem.UI.ClientManagementServiceReference {
         
         public System.Threading.Tasks.Task DeleteAddressAsync(int addressId) {
             return base.Channel.DeleteAddressAsync(addressId);
+        }
+        
+        public int AddContact(ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo contact) {
+            return base.Channel.AddContact(contact);
+        }
+        
+        public System.Threading.Tasks.Task<int> AddContactAsync(ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo contact) {
+            return base.Channel.AddContactAsync(contact);
+        }
+        
+        public ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo GetContact(int contactInfoId) {
+            return base.Channel.GetContact(contactInfoId);
+        }
+        
+        public System.Threading.Tasks.Task<ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo> GetContactAsync(int contactInfoId) {
+            return base.Channel.GetContactAsync(contactInfoId);
+        }
+        
+        public System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo> GetAllContacts() {
+            return base.Channel.GetAllContacts();
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo>> GetAllContactsAsync() {
+            return base.Channel.GetAllContactsAsync();
+        }
+        
+        public void UpdateContact(ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo contact) {
+            base.Channel.UpdateContact(contact);
+        }
+        
+        public System.Threading.Tasks.Task UpdateContactAsync(ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo contact) {
+            return base.Channel.UpdateContactAsync(contact);
+        }
+        
+        public void DeleteContact(int contactInfoId) {
+            base.Channel.DeleteContact(contactInfoId);
+        }
+        
+        public System.Threading.Tasks.Task DeleteContactAsync(int contactInfoId) {
+            return base.Channel.DeleteContactAsync(contactInfoId);
+        }
+        
+        public System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.ContactType> GetAllContactTypes() {
+            return base.Channel.GetAllContactTypes();
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.ContactType>> GetAllContactTypesAsync() {
+            return base.Channel.GetAllContactTypesAsync();
         }
     }
 }

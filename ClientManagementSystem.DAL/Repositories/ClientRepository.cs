@@ -1,4 +1,5 @@
 ﻿using ClientManagementSystem.DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
@@ -11,117 +12,175 @@ namespace ClientManagementSystem.DAL.Repositories
         {
             _connectionString = connectionString;
         }
-        public void AddClient(Client client)
+        public int AddClient(Client client)
         {
-            using (SqlConnection con = new SqlConnection(_connectionString))
+            try
             {
-                string query = @"INSERT INTO Client (FirstName, LastName, Gender, Nationality, Occupation) 
-                                VALUES (@FirstName, @LastName, @Gender, @Nationality, @Occupation)";
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                {
+                    string query = @"INSERT INTO Client (FirstName, LastName, Gender, Nationality, Occupation) 
+                                    VALUES (@FirstName, @LastName, @Gender, @Nationality, @Occupation);
+                                    SELECT SCOPE_IDENTITY(); ";
 
-                SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@FirstName", client.FirstName);
-                cmd.Parameters.AddWithValue("@LastName", client.LastName);
-                cmd.Parameters.AddWithValue("@Gender", client.Gender);
-                cmd.Parameters.AddWithValue("@Occupation", client.Occupation);
-                cmd.Parameters.AddWithValue("@Nationality", client.Nationality);
-                con.Open(); 
-                cmd.ExecuteNonQuery();
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("@FirstName", client.FirstName);
+                    cmd.Parameters.AddWithValue("@LastName", client.LastName);
+                    cmd.Parameters.AddWithValue("@Gender", client.Gender);
+                    cmd.Parameters.AddWithValue("@Occupation", client.Occupation);
+                    cmd.Parameters.AddWithValue("@Nationality", client.Nationality);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+
+                    int newId = Convert.ToInt32(cmd.ExecuteScalar());
+
+                    return newId;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
+
         public Client GetClient(int clientId)
         {
-            Client client = null;
-            using (SqlConnection con = new SqlConnection(_connectionString))
+            try
             {
-                string query = @"SELECT * 
-                                FROM Client 
-                                WHERE ClientId = @ClientId";
+                Client client = null;
 
-                SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@ClientId", clientId); con.Open();
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                using (SqlConnection con = new SqlConnection(_connectionString))
                 {
-                    if (reader.Read())
+                    string query = @"SELECT * 
+                                     FROM Client 
+                                     WHERE ClientId = @ClientId";
+
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("@ClientId", clientId); con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        client = new Client
+                        if (reader.Read())
                         {
-                            ClientId = (int)reader["ClientId"],
-                            FirstName = (string)reader["FirstName"],
-                            LastName = (string)reader["LastName"],
-                            Gender = (string)reader["Gender"],
-                            Occupation = (string)reader["Occupation"],
-                            Nationality = (string)reader["Nationality"],
-                        };
+                            client = new Client
+                            {
+                                ClientId = (int)reader["ClientId"],
+                                FirstName = (string)reader["FirstName"],
+                                LastName = (string)reader["LastName"],
+                                Gender = (string)reader["Gender"],
+                                Occupation = (string)reader["Occupation"],
+                                Nationality = (string)reader["Nationality"],
+                            };
+                        }
                     }
                 }
+
+                return client;
             }
-            return client;
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
+        
         public List<Client> GetAllClients()
         {
-            List<Client> clients = new List<Client>();
-            using (SqlConnection con = new SqlConnection(_connectionString))
+            try
             {
-                string query = @"SELECT * 
+                List<Client> clients = new List<Client>();
+
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                {
+                    string query = @"SELECT * 
                                 FROM Client";
 
-                SqlCommand cmd = new SqlCommand(query, con);
+                    SqlCommand cmd = new SqlCommand(query, con);
 
-                con.Open(); 
-                
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
+                    con.Open();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        clients.Add(new Client
+                        while (reader.Read())
                         {
-                            ClientId = (int)reader["ClientId"],
-                            FirstName = (string)reader["FirstName"],
-                            LastName = (string)reader["LastName"],
-                            Gender = (string)reader["Gender"],
-                            Occupation = (string)reader["Occupation"],
-                            Nationality = (string)reader["Nationality"],
-                        });
+                            clients.Add(new Client
+                            {
+                                ClientId = (int)reader["ClientId"],
+                                FirstName = (string)reader["FirstName"],
+                                LastName = (string)reader["LastName"],
+                                Gender = (string)reader["Gender"],
+                                Occupation = (string)reader["Occupation"],
+                                Nationality = (string)reader["Nationality"],
+                            });
+                        }
                     }
                 }
-            }
-            return clients;
-        }
 
+                return clients;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        
         public void UpdateClient(Client client)
         {
-            using (SqlConnection con = new SqlConnection(_connectionString))
+            try
             {
-                string query = @"UPDATE Client SET FirstName = @FirstName, LastName = @LastName, Gender = @Gender, Occupation = @Occupation, Nationality = @Nationality
-                                WHERE ClientId = @ClientId";
-                
-                SqlCommand cmd = new SqlCommand(query, con);
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                {
+                    string query = @"UPDATE Client 
+                                        SET FirstName = @FirstName, 
+                                            LastName = @LastName, 
+                                            Gender = @Gender, 
+                                            Occupation = @Occupation, 
+                                            Nationality = @Nationality
+                                    WHERE ClientId = @ClientId";
 
-                cmd.Parameters.AddWithValue("@ClientId", client.ClientId);
-                cmd.Parameters.AddWithValue("@FirstName", client.FirstName); 
-                cmd.Parameters.AddWithValue("@LastName", client.LastName);
-                cmd.Parameters.AddWithValue("@Gender", client.Gender);
-                cmd.Parameters.AddWithValue("@Occupation", client.Occupation);
-                cmd.Parameters.AddWithValue("@Nationality", client.Nationality);
-                
-                con.Open();
-                
-                cmd.ExecuteNonQuery();
+                    SqlCommand cmd = new SqlCommand(query, con);
+
+                    cmd.Parameters.AddWithValue("@ClientId", client.ClientId);
+                    cmd.Parameters.AddWithValue("@FirstName", client.FirstName);
+                    cmd.Parameters.AddWithValue("@LastName", client.LastName);
+                    cmd.Parameters.AddWithValue("@Gender", client.Gender);
+                    cmd.Parameters.AddWithValue("@Occupation", client.Occupation);
+                    cmd.Parameters.AddWithValue("@Nationality", client.Nationality);
+
+                    con.Open();
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
+        
         public void DeleteClient(int clientId)
         {
-            using (SqlConnection con = new SqlConnection(_connectionString))
+            try
             {
-                string query = "DELETE FROM Client WHERE ClientId = @ClientId";
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                {
+                    string query = @"DELETE FROM Client 
+                                WHERE ClientId = @ClientId";
 
-                SqlCommand cmd = new SqlCommand(query, con);
+                    SqlCommand cmd = new SqlCommand(query, con);
 
-                cmd.Parameters.AddWithValue("@ClientId", clientId);
+                    cmd.Parameters.AddWithValue("@ClientId", clientId);
 
-                con.Open();
+                    con.Open();
 
-                cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }

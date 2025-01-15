@@ -1,4 +1,5 @@
 ﻿using ClientManagementSystem.DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
@@ -13,168 +14,237 @@ namespace ClientManagementSystem.DAL.Repositories
             _connectionString = connectionString;
         }
 
-        public void AddAddress(Address address)
+        public int AddAddress(Address address)
         {
-            using (SqlConnection con = new SqlConnection(_connectionString))
+            try
             {
-                string query = @"INSERT INTO Address (AddressType, AddressDetail)
-                                VALUES(@AddressType, @AddressDetail)";
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                {
+                    string query = @"INSERT INTO Address (ClientId, AddressTypeId, AddressDetail)
+                                    VALUES(@ClientId, @AddressTypeId, @AddressDetail);
+                                    SELECT SCOPE_IDENTITY();";
 
-                SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@AddressType", address.AddressType);
-                cmd.Parameters.AddWithValue("@AddressDetail", address.AddressDetail);
-                con.Open();
-                cmd.ExecuteNonQuery();
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("@ClientId", address.ClientId);
+                    cmd.Parameters.AddWithValue("@AddressTypeId", address.AddressTypeId);
+                    cmd.Parameters.AddWithValue("@AddressDetail", address.AddressDetail);
+
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+
+                    int newId = Convert.ToInt32(cmd.ExecuteScalar());
+
+                    return newId;
+                }
+            }
+            catch (System.Exception)
+            {
+
+                throw;
             }
         }
 
         public Address GetAddress(int addressId)
         {
-            Address address = null;
-            using (SqlConnection con = new SqlConnection(_connectionString))
+            try
             {
-                string query = @"SELECT * 
+                Address address = null;
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                {
+                    string query = @"SELECT * 
                                 FROM Address 
                                 WHERE AddressId = @AddressId";
 
-                SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("Address@Id", addressId);
-                con.Open();
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (reader.Read())
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("Address@Id", addressId);
+                    con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        address = new Address
+                        if (reader.Read())
                         {
-                            AddressId = (int)reader["AddressId"],
-                            ClientId = (int)reader["ClientId"],
-                            AddressTypeId = (int)reader["AddressTypeId"],
-                            AddressDetail = (string)reader["AddressDetail"],
-                        };
-                    }
-                }
-            }
-            return address;
-        }
-
-        public List<Address> GetAllAddresses()
-        {
-            List<Address> addresses = new List<Address>();
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            {
-                string query = @"SELECT * 
-                                FROM Address";
-
-                SqlCommand cmd = new SqlCommand(query, con);
-
-                con.Open();
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        addresses.Add(
-                            new Address
+                            address = new Address
                             {
                                 AddressId = (int)reader["AddressId"],
                                 ClientId = (int)reader["ClientId"],
                                 AddressTypeId = (int)reader["AddressTypeId"],
                                 AddressDetail = (string)reader["AddressDetail"],
-                            }
-                        );
+                            };
+                        }
                     }
                 }
+
+                return address;
             }
-            return addresses;
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<Address> GetAllAddresses()
+        {
+            try
+            {
+                List<Address> addresses = new List<Address>();
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                {
+                    string query = @"SELECT * 
+                                FROM Address";
+
+                    SqlCommand cmd = new SqlCommand(query, con);
+
+                    con.Open();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            addresses.Add(
+                                new Address
+                                {
+                                    AddressId = (int)reader["AddressId"],
+                                    ClientId = (int)reader["ClientId"],
+                                    AddressTypeId = (int)reader["AddressTypeId"],
+                                    AddressDetail = (string)reader["AddressDetail"],
+                                }
+                            );
+                        }
+                    }
+                }
+
+                return addresses;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public List<Address> GetAllAddressesByClientId(int clientId)
         {
-            List<Address> addresses = new List<Address>();
-            using (SqlConnection con = new SqlConnection(_connectionString))
+            try
             {
-                string query = @"SELECT * 
+                List<Address> addresses = new List<Address>();
+
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                {
+                    string query = @"SELECT * 
                                 FROM Address 
                                 WHERE ClientId = @ClientId";
 
-                SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@ClientId", clientId);
-                con.Open();
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("@ClientId", clientId);
+                    con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        addresses.Add(new Address
+                        while (reader.Read())
                         {
-                            AddressId = (int)reader["AddressId"],
-                            ClientId = (int)reader["ClientId"],
-                            AddressTypeId = (int)reader["AddressTypeId"],
-                            AddressDetail = (string)reader["AddressDetail"],
-                        });
+                            addresses.Add(new Address
+                            {
+                                AddressId = (int)reader["AddressId"],
+                                ClientId = (int)reader["ClientId"],
+                                AddressTypeId = (int)reader["AddressTypeId"],
+                                AddressDetail = (string)reader["AddressDetail"],
+                            });
+                        }
                     }
                 }
+
+                return addresses;
             }
-            return addresses;
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public List<AddressType> GetAllAddressTypes()
         {
-            List<AddressType> AddressTypeses = new List<AddressType>();
-
-            using (SqlConnection con = new SqlConnection(_connectionString))
+            try
             {
-                string query = @"SELECT * 
-                                FROM AddressTypes";
 
-                SqlCommand cmd = new SqlCommand(query, con);
-                con.Open();
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                List<AddressType> AddressTypeses = new List<AddressType>();
+
+                using (SqlConnection con = new SqlConnection(_connectionString))
                 {
-                    if (reader.Read())
+                    string query = @"SELECT * 
+                                FROM AddressType";
+
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        AddressTypeses.Add(
-                            new AddressType
-                            {
-                                AddressTypeId = (int)reader["AddressTypeId"],
-                                TypeName = (string)reader["TypeName"],
-                            }
-                        );
+                        while (reader.Read())
+                        {
+                            AddressTypeses.Add(
+                                new AddressType
+                                {
+                                    AddressTypeId = (int)reader["AddressTypeId"],
+                                    TypeName = (string)reader["TypeName"],
+                                }
+                            );
+                        }
                     }
                 }
+
+                return AddressTypeses;
             }
-            return AddressTypeses;
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public void UpdateAddress(Address address)
         {
-            using (SqlConnection con = new SqlConnection(_connectionString))
+            try
             {
-                string query = @"UPDATE Address 
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                {
+                    string query = @"UPDATE Address 
                                 SET ClientId = @ClientId, 
-                                AddressTypeId = @AddressTypeId, 
-                                AddressDetail = @AddressDetail, 
+                                    AddressTypeId = @AddressTypeId, 
+                                    AddressDetail = @AddressDetail, 
                                 WHERE AddressId = @AddressId";
 
-                SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@AddressId", address.AddressId);
-                cmd.Parameters.AddWithValue("@ClientId", address.ClientId);
-                cmd.Parameters.AddWithValue("@AddressTypeId", address.AddressTypeId);
-                cmd.Parameters.AddWithValue("@AddressDetail", address.AddressDetail);
-                con.Open();
-                cmd.ExecuteNonQuery();
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("@AddressId", address.AddressId);
+                    cmd.Parameters.AddWithValue("@ClientId", address.ClientId);
+                    cmd.Parameters.AddWithValue("@AddressTypeId", address.AddressTypeId);
+                    cmd.Parameters.AddWithValue("@AddressDetail", address.AddressDetail);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 
         public void DeleteAddress(int addressId)
         {
-            using (SqlConnection con = new SqlConnection(_connectionString))
+            try
             {
-                string query = "DELETE FROM Address WHERE AddressId = @AddressId";
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                {
+                    string query = "DELETE FROM Address WHERE AddressId = @AddressId";
 
-                SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@AddressId", addressId);
-                con.Open();
-                cmd.ExecuteNonQuery();
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("@AddressId", addressId);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }

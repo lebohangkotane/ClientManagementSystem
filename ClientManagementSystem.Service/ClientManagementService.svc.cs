@@ -15,17 +15,20 @@ namespace ClientManagementSystem.Service
     {
         private readonly IClientService _clientService;
         private readonly IAddressService _addressService;
+        private readonly IContactService _contactService;
 
         public ClientManagementService()
         {
             string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ClientManagementDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;";
+           
             _clientService = new ClientService(connectionString);
             _addressService = new AddressService(connectionString);
+            _contactService = new ContactService(connectionString);
         }
 
-        public void AddClient(Client client)
+        public int AddClient(Client client)
         {
-            _clientService.AddClient(client);
+            return _clientService.AddClient(client);
         }
 
         public Client GetClient(int clientId)
@@ -49,9 +52,9 @@ namespace ClientManagementSystem.Service
         }
 
 
-        public void AddAddress(Address address)
+        public int AddAddress(Address address)
         { 
-            _addressService.AddAddress(address);
+            return _addressService.AddAddress(address);
         }
 
         public Address GetAddress(int addressId)
@@ -82,6 +85,36 @@ namespace ClientManagementSystem.Service
         public void DeleteAddress(int addressId)
         {
             _addressService.DeleteAddress(addressId);
+        }
+
+        public int AddContact(ContactInfo contact)
+        {
+            return _contactService.AddContactInfo(contact);
+        }
+
+        public ContactInfo GetContact(int contactInfoId)
+        {
+            return _contactService.GetContactInfo(contactInfoId);
+        }
+
+        public List<ContactInfo> GetAllContacts()
+        {
+            return _contactService.GetAllContactInfos();
+        }
+
+        public void UpdateContact(ContactInfo contact)
+        {
+            _contactService.UpdateContactInfo(contact);
+        }
+
+        public void DeleteContact(int contactInfoId)
+        {
+            _contactService.DeleteContactInfo(contactInfoId);
+        }
+
+        public List<ContactType> GetAllContactTypes()
+        {
+            return _contactService.GetAllContactTypes();
         }
     }
 }

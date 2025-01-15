@@ -1,10 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="ClientManagementService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="ClientManagementService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import namespace="http://tempuri.org/" />
-      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ClientManagementSystem.DAL.Models" />
+      <xsd:import schemaLocation="http://localhost:8733/Design_Time_Addresses/ClientManagementService/Service1/?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:8733/Design_Time_Addresses/ClientManagementService/Service1/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:8733/Design_Time_Addresses/ClientManagementService/Service1/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ClientManagementSystem.DAL.Models" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IClientManagementService_AddClient_InputMessage">
@@ -79,6 +79,42 @@
   <wsdl:message name="IClientManagementService_DeleteAddress_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteAddressResponse" />
   </wsdl:message>
+  <wsdl:message name="IClientManagementService_AddContact_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddContact" />
+  </wsdl:message>
+  <wsdl:message name="IClientManagementService_AddContact_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddContactResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientManagementService_GetContact_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetContact" />
+  </wsdl:message>
+  <wsdl:message name="IClientManagementService_GetContact_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetContactResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientManagementService_GetAllContacts_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllContacts" />
+  </wsdl:message>
+  <wsdl:message name="IClientManagementService_GetAllContacts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllContactsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientManagementService_UpdateContact_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateContact" />
+  </wsdl:message>
+  <wsdl:message name="IClientManagementService_UpdateContact_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateContactResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientManagementService_DeleteContact_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteContact" />
+  </wsdl:message>
+  <wsdl:message name="IClientManagementService_DeleteContact_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteContactResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientManagementService_GetAllContactTypes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllContactTypes" />
+  </wsdl:message>
+  <wsdl:message name="IClientManagementService_GetAllContactTypes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllContactTypesResponse" />
+  </wsdl:message>
   <wsdl:portType name="IClientManagementService">
     <wsdl:operation name="AddClient">
       <wsdl:input wsaw:Action="http://tempuri.org/IClientManagementService/AddClient" message="tns:IClientManagementService_AddClient_InputMessage" />
@@ -127,6 +163,30 @@
     <wsdl:operation name="DeleteAddress">
       <wsdl:input wsaw:Action="http://tempuri.org/IClientManagementService/DeleteAddress" message="tns:IClientManagementService_DeleteAddress_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IClientManagementService/DeleteAddressResponse" message="tns:IClientManagementService_DeleteAddress_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddContact">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientManagementService/AddContact" message="tns:IClientManagementService_AddContact_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientManagementService/AddContactResponse" message="tns:IClientManagementService_AddContact_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContact">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientManagementService/GetContact" message="tns:IClientManagementService_GetContact_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientManagementService/GetContactResponse" message="tns:IClientManagementService_GetContact_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllContacts">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientManagementService/GetAllContacts" message="tns:IClientManagementService_GetAllContacts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientManagementService/GetAllContactsResponse" message="tns:IClientManagementService_GetAllContacts_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateContact">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientManagementService/UpdateContact" message="tns:IClientManagementService_UpdateContact_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientManagementService/UpdateContactResponse" message="tns:IClientManagementService_UpdateContact_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteContact">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientManagementService/DeleteContact" message="tns:IClientManagementService_DeleteContact_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientManagementService/DeleteContactResponse" message="tns:IClientManagementService_DeleteContact_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllContactTypes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientManagementService/GetAllContactTypes" message="tns:IClientManagementService_GetAllContactTypes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientManagementService/GetAllContactTypesResponse" message="tns:IClientManagementService_GetAllContactTypes_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IClientManagementService" type="tns:IClientManagementService">
@@ -239,10 +299,64 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="AddContact">
+      <soap:operation soapAction="http://tempuri.org/IClientManagementService/AddContact" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContact">
+      <soap:operation soapAction="http://tempuri.org/IClientManagementService/GetContact" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllContacts">
+      <soap:operation soapAction="http://tempuri.org/IClientManagementService/GetAllContacts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateContact">
+      <soap:operation soapAction="http://tempuri.org/IClientManagementService/UpdateContact" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteContact">
+      <soap:operation soapAction="http://tempuri.org/IClientManagementService/DeleteContact" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllContactTypes">
+      <soap:operation soapAction="http://tempuri.org/IClientManagementService/GetAllContactTypes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="ClientManagementService">
     <wsdl:port name="BasicHttpBinding_IClientManagementService" binding="tns:BasicHttpBinding_IClientManagementService">
-      <soap:address location="http://localhost:8733/Design_Time_Addresses/ClientManagementSystem.Service/Service1/" />
+      <soap:address location="http://localhost:8733/Design_Time_Addresses/ClientManagementService/Service1/" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

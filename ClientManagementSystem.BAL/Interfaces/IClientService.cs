@@ -5,7 +5,7 @@ namespace ClientManagementSystem.BAL
 {
     public interface IClientService
     {
-        void AddClient(Client client); 
+        int AddClient(Client client); 
         Client GetClient(int clientId); 
         List<Client> GetAllClients();
         void UpdateClient(Client client); 

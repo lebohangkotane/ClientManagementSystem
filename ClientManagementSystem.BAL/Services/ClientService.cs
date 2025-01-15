@@ -14,9 +14,9 @@ namespace ClientManagementSystem.BAL
             _clientRepository = new ClientRepository(connectionString);
         }
 
-        public void AddClient(Client client)
+        public int AddClient(Client client)
         {
-            _clientRepository.AddClient(client);
+            return _clientRepository.AddClient(client);
         }
         public Client GetClient(int clientId)
         {

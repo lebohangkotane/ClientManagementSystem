@@ -1,5 +1,4 @@
-﻿using ClientManagementSystem.UI.;
-using ClientManagementSystem.UI.ClientManagementServiceReference;
+﻿using ClientManagementSystem.UI.ClientManagementServiceReference;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -8,18 +7,18 @@ namespace ClientManagementSystem.UI.Controllers
 {
     public class ClientController : Controller
     {
-        private readonly IClientManagementService _clientService;
+        private readonly IClientManagementService _clientManagementService;
 
         // Using Dependency Injection to pass the service client
-        public ClientController(IClientManagementService clientService)
+        public ClientController(IClientManagementService clientManagementService)
         {
-            _clientService = clientService;
+            _clientManagementService = clientManagementService;
         }
 
         // GET: Client
         public async Task<ActionResult> Index()
         {
-            var clients = await _clientService.GetAllClientsAsync();
+            var clients = await _clientManagementService.GetAllClientsAsync();
 
             var clientList = clients.Select(c => new Client
             {
@@ -35,9 +34,16 @@ namespace ClientManagementSystem.UI.Controllers
         }
 
         // GET: Client/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            return View();
+            var client = new Client
+            {
+                AddressTypes = await _clientManagementService.GetAllAddressTypesAsync(),
+            };
+
+            ViewBag.ContactTypes = await _clientManagementService.GetAllContactTypesAsync();
+
+            return View(client);
         }
 
         // POST: Client/Create
@@ -47,8 +53,25 @@ namespace ClientManagementSystem.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                client.AddressTypes = await _clientService.GetAllAddressTypes().ToList();
-                await _clientService.AddClientAsync(client);
+
+                var clientId = await _clientManagementService.AddClientAsync(client);
+
+                //add addresses
+                foreach (var address in client.Addresses)
+                {
+                    address.ClientId = clientId;
+                    address.AddressTypeId = address.AddressTypeId;
+
+                    await _clientManagementService.AddAddressAsync(address);                    
+                }
+
+                //add contactInfo
+                foreach (var contactInfo in client.ContactInfos)
+                {
+                    contactInfo.ClientId = clientId;  
+                    
+                    await _clientManagementService.AddContactAsync(contactInfo);
+                }
 
                 return Json(new { success = true });
             }
@@ -59,7 +82,7 @@ namespace ClientManagementSystem.UI.Controllers
         // GET: Client/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            var client = await _clientService.GetClientAsync(id);
+            var client = await _clientManagementService.GetClientAsync(id);
 
             if (client == null)
             {
@@ -83,7 +106,7 @@ namespace ClientManagementSystem.UI.Controllers
             {
                 try
                 {
-                    await _clientService.UpdateClientAsync(client);
+                    await _clientManagementService.UpdateClientAsync(client);
 
                     return RedirectToAction(nameof(Index));
                 }
@@ -100,7 +123,7 @@ namespace ClientManagementSystem.UI.Controllers
         // GET: Client/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            var client = await _clientService.GetClientAsync(id);
+            var client = await _clientManagementService.GetClientAsync(id);
 
             if (client == null)
             {
@@ -117,7 +140,7 @@ namespace ClientManagementSystem.UI.Controllers
         {
             try
             {
-                await _clientService.DeleteClientAsync(ClientId);
+                await _clientManagementService.DeleteClientAsync(ClientId);
 
                 return RedirectToAction(nameof(Index));
             }
