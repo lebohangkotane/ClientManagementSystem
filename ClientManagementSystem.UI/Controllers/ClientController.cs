@@ -1,4 +1,5 @@
-﻿using ClientManagementSystem.UI.ClientManagementServiceReference;
+﻿using ClientManagementSystem.UI.;
+using ClientManagementSystem.UI.ClientManagementServiceReference;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -46,7 +47,7 @@ namespace ClientManagementSystem.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                client.AddressTypes = await _clientService.GetAddressTypes();
+                client.AddressTypes = await _clientService.GetAllAddressTypes().ToList();
                 await _clientService.AddClientAsync(client);
 
                 return Json(new { success = true });

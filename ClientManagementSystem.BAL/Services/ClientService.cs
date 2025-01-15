@@ -1,5 +1,6 @@
 ﻿using ClientManagementSystem.DAL;
 using ClientManagementSystem.DAL.Models;
+using ClientManagementSystem.DAL.Repositories;
 using System.Collections.Generic;
 
 namespace ClientManagementSystem.BAL

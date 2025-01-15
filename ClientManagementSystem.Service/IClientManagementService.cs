@@ -1,10 +1,6 @@
 ﻿using ClientManagementSystem.DAL.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.Text;
 
 namespace ClientManagementSystem.Service
 {
@@ -13,17 +9,39 @@ namespace ClientManagementSystem.Service
     {
         [OperationContract]
         void AddClient(Client client);
-        
+
         [OperationContract]
         Client GetClient(int clientId);
-        
+
         [OperationContract]
         List<Client> GetAllClients();
-        
-        [OperationContract] 
-        void UpdateClient(Client client); 
-        
-        [OperationContract] 
+
+        [OperationContract]
+        void UpdateClient(Client client);
+
+        [OperationContract]
         void DeleteClient(int clientId);
+
+
+        [OperationContract]
+        void AddAddress(Address address);
+
+        [OperationContract]
+        Address GetAddress(int addressId);
+
+        [OperationContract]
+        List<Address> GetAllAddresses();
+
+        [OperationContract]
+        List<Address> GetAllAddressesByClientId(int clientId);
+
+        [OperationContract]
+        List<AddressType> GetAllAddressTypes();
+
+        [OperationContract]
+        void UpdateAddress(Address address);
+
+        [OperationContract]
+        void DeleteAddress(int addressId);
     }
 }

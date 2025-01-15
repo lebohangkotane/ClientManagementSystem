@@ -23,16 +23,16 @@ namespace ClientManagementSystem.UI.ClientManagementServiceReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private ClientManagementSystem.UI.ClientManagementServiceReference.AddressType[] AddressTypesField;
+        private System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.AddressType> AddressTypesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private ClientManagementSystem.UI.ClientManagementServiceReference.Address[] AddressesField;
+        private System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.Address> AddressesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int ClientIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo[] ContactInfosField;
+        private System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo> ContactInfosField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string FirstNameField;
@@ -60,7 +60,7 @@ namespace ClientManagementSystem.UI.ClientManagementServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public ClientManagementSystem.UI.ClientManagementServiceReference.AddressType[] AddressTypes {
+        public System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.AddressType> AddressTypes {
             get {
                 return this.AddressTypesField;
             }
@@ -73,7 +73,7 @@ namespace ClientManagementSystem.UI.ClientManagementServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public ClientManagementSystem.UI.ClientManagementServiceReference.Address[] Addresses {
+        public System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.Address> Addresses {
             get {
                 return this.AddressesField;
             }
@@ -99,7 +99,7 @@ namespace ClientManagementSystem.UI.ClientManagementServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo[] ContactInfos {
+        public System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo> ContactInfos {
             get {
                 return this.ContactInfosField;
             }
@@ -199,7 +199,7 @@ namespace ClientManagementSystem.UI.ClientManagementServiceReference {
         private int AddressTypeIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private ClientManagementSystem.UI.ClientManagementServiceReference.Address[] AddressesField;
+        private System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.Address> AddressesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string TypeNameField;
@@ -228,7 +228,7 @@ namespace ClientManagementSystem.UI.ClientManagementServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public ClientManagementSystem.UI.ClientManagementServiceReference.Address[] Addresses {
+        public System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.Address> Addresses {
             get {
                 return this.AddressesField;
             }
@@ -523,7 +523,7 @@ namespace ClientManagementSystem.UI.ClientManagementServiceReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo[] ContactInfosField;
+        private System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo> ContactInfosField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int ContactTypeIdField;
@@ -542,7 +542,7 @@ namespace ClientManagementSystem.UI.ClientManagementServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo[] ContactInfos {
+        public System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.ContactInfo> ContactInfos {
             get {
                 return this.ContactInfosField;
             }
@@ -607,10 +607,10 @@ namespace ClientManagementSystem.UI.ClientManagementServiceReference {
         System.Threading.Tasks.Task<ClientManagementSystem.UI.ClientManagementServiceReference.Client> GetClientAsync(int clientId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/GetAllClients", ReplyAction="http://tempuri.org/IClientManagementService/GetAllClientsResponse")]
-        ClientManagementSystem.UI.ClientManagementServiceReference.Client[] GetAllClients();
+        System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.Client> GetAllClients();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/GetAllClients", ReplyAction="http://tempuri.org/IClientManagementService/GetAllClientsResponse")]
-        System.Threading.Tasks.Task<ClientManagementSystem.UI.ClientManagementServiceReference.Client[]> GetAllClientsAsync();
+        System.Threading.Tasks.Task<System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.Client>> GetAllClientsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/UpdateClient", ReplyAction="http://tempuri.org/IClientManagementService/UpdateClientResponse")]
         void UpdateClient(ClientManagementSystem.UI.ClientManagementServiceReference.Client client);
@@ -623,6 +623,48 @@ namespace ClientManagementSystem.UI.ClientManagementServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/DeleteClient", ReplyAction="http://tempuri.org/IClientManagementService/DeleteClientResponse")]
         System.Threading.Tasks.Task DeleteClientAsync(int clientId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/AddAddress", ReplyAction="http://tempuri.org/IClientManagementService/AddAddressResponse")]
+        void AddAddress(ClientManagementSystem.UI.ClientManagementServiceReference.Address address);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/AddAddress", ReplyAction="http://tempuri.org/IClientManagementService/AddAddressResponse")]
+        System.Threading.Tasks.Task AddAddressAsync(ClientManagementSystem.UI.ClientManagementServiceReference.Address address);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/GetAddress", ReplyAction="http://tempuri.org/IClientManagementService/GetAddressResponse")]
+        ClientManagementSystem.UI.ClientManagementServiceReference.Address GetAddress(int addressId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/GetAddress", ReplyAction="http://tempuri.org/IClientManagementService/GetAddressResponse")]
+        System.Threading.Tasks.Task<ClientManagementSystem.UI.ClientManagementServiceReference.Address> GetAddressAsync(int addressId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/GetAllAddresses", ReplyAction="http://tempuri.org/IClientManagementService/GetAllAddressesResponse")]
+        System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.Address> GetAllAddresses();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/GetAllAddresses", ReplyAction="http://tempuri.org/IClientManagementService/GetAllAddressesResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.Address>> GetAllAddressesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/GetAllAddressesByClientId", ReplyAction="http://tempuri.org/IClientManagementService/GetAllAddressesByClientIdResponse")]
+        System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.Address> GetAllAddressesByClientId(int clientId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/GetAllAddressesByClientId", ReplyAction="http://tempuri.org/IClientManagementService/GetAllAddressesByClientIdResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.Address>> GetAllAddressesByClientIdAsync(int clientId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/GetAllAddressTypes", ReplyAction="http://tempuri.org/IClientManagementService/GetAllAddressTypesResponse")]
+        System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.AddressType> GetAllAddressTypes();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/GetAllAddressTypes", ReplyAction="http://tempuri.org/IClientManagementService/GetAllAddressTypesResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.AddressType>> GetAllAddressTypesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/UpdateAddress", ReplyAction="http://tempuri.org/IClientManagementService/UpdateAddressResponse")]
+        void UpdateAddress(ClientManagementSystem.UI.ClientManagementServiceReference.Address address);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/UpdateAddress", ReplyAction="http://tempuri.org/IClientManagementService/UpdateAddressResponse")]
+        System.Threading.Tasks.Task UpdateAddressAsync(ClientManagementSystem.UI.ClientManagementServiceReference.Address address);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/DeleteAddress", ReplyAction="http://tempuri.org/IClientManagementService/DeleteAddressResponse")]
+        void DeleteAddress(int addressId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientManagementService/DeleteAddress", ReplyAction="http://tempuri.org/IClientManagementService/DeleteAddressResponse")]
+        System.Threading.Tasks.Task DeleteAddressAsync(int addressId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -668,11 +710,11 @@ namespace ClientManagementSystem.UI.ClientManagementServiceReference {
             return base.Channel.GetClientAsync(clientId);
         }
         
-        public ClientManagementSystem.UI.ClientManagementServiceReference.Client[] GetAllClients() {
+        public System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.Client> GetAllClients() {
             return base.Channel.GetAllClients();
         }
         
-        public System.Threading.Tasks.Task<ClientManagementSystem.UI.ClientManagementServiceReference.Client[]> GetAllClientsAsync() {
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.Client>> GetAllClientsAsync() {
             return base.Channel.GetAllClientsAsync();
         }
         
@@ -690,6 +732,62 @@ namespace ClientManagementSystem.UI.ClientManagementServiceReference {
         
         public System.Threading.Tasks.Task DeleteClientAsync(int clientId) {
             return base.Channel.DeleteClientAsync(clientId);
+        }
+        
+        public void AddAddress(ClientManagementSystem.UI.ClientManagementServiceReference.Address address) {
+            base.Channel.AddAddress(address);
+        }
+        
+        public System.Threading.Tasks.Task AddAddressAsync(ClientManagementSystem.UI.ClientManagementServiceReference.Address address) {
+            return base.Channel.AddAddressAsync(address);
+        }
+        
+        public ClientManagementSystem.UI.ClientManagementServiceReference.Address GetAddress(int addressId) {
+            return base.Channel.GetAddress(addressId);
+        }
+        
+        public System.Threading.Tasks.Task<ClientManagementSystem.UI.ClientManagementServiceReference.Address> GetAddressAsync(int addressId) {
+            return base.Channel.GetAddressAsync(addressId);
+        }
+        
+        public System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.Address> GetAllAddresses() {
+            return base.Channel.GetAllAddresses();
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.Address>> GetAllAddressesAsync() {
+            return base.Channel.GetAllAddressesAsync();
+        }
+        
+        public System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.Address> GetAllAddressesByClientId(int clientId) {
+            return base.Channel.GetAllAddressesByClientId(clientId);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.Address>> GetAllAddressesByClientIdAsync(int clientId) {
+            return base.Channel.GetAllAddressesByClientIdAsync(clientId);
+        }
+        
+        public System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.AddressType> GetAllAddressTypes() {
+            return base.Channel.GetAllAddressTypes();
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<ClientManagementSystem.UI.ClientManagementServiceReference.AddressType>> GetAllAddressTypesAsync() {
+            return base.Channel.GetAllAddressTypesAsync();
+        }
+        
+        public void UpdateAddress(ClientManagementSystem.UI.ClientManagementServiceReference.Address address) {
+            base.Channel.UpdateAddress(address);
+        }
+        
+        public System.Threading.Tasks.Task UpdateAddressAsync(ClientManagementSystem.UI.ClientManagementServiceReference.Address address) {
+            return base.Channel.UpdateAddressAsync(address);
+        }
+        
+        public void DeleteAddress(int addressId) {
+            base.Channel.DeleteAddress(addressId);
+        }
+        
+        public System.Threading.Tasks.Task DeleteAddressAsync(int addressId) {
+            return base.Channel.DeleteAddressAsync(addressId);
         }
     }
 }

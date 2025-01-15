@@ -1,5 +1,4 @@
 ﻿using ClientManagementSystem.DAL.Models;
-using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
@@ -18,10 +17,10 @@ namespace ClientManagementSystem.DAL.Repositories
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
-                string query = @"INSERT INTO Address (ClientId, AddressType, AddressDetail)";
+                string query = @"INSERT INTO Address (AddressType, AddressDetail)
+                                VALUES(@AddressType, @AddressDetail)";
 
                 SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@ClientId", address.ClientId);
                 cmd.Parameters.AddWithValue("@AddressType", address.AddressType);
                 cmd.Parameters.AddWithValue("@AddressDetail", address.AddressDetail);
                 con.Open();
@@ -36,10 +35,10 @@ namespace ClientManagementSystem.DAL.Repositories
             {
                 string query = @"SELECT * 
                                 FROM Address 
-                                WHERE Id = @Id";
+                                WHERE AddressId = @AddressId";
 
                 SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@Id", addressId);
+                cmd.Parameters.AddWithValue("Address@Id", addressId);
                 con.Open();
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -58,7 +57,38 @@ namespace ClientManagementSystem.DAL.Repositories
             return address;
         }
 
-        public List<Address> GetAddressesByClient(int clientId)
+        public List<Address> GetAllAddresses()
+        {
+            List<Address> addresses = new List<Address>();
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                string query = @"SELECT * 
+                                FROM Address";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+
+                con.Open();
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        addresses.Add(
+                            new Address
+                            {
+                                AddressId = (int)reader["AddressId"],
+                                ClientId = (int)reader["ClientId"],
+                                AddressTypeId = (int)reader["AddressTypeId"],
+                                AddressDetail = (string)reader["AddressDetail"],
+                            }
+                        );
+                    }
+                }
+            }
+            return addresses;
+        }
+
+        public List<Address> GetAllAddressesByClientId(int clientId)
         {
             List<Address> addresses = new List<Address>();
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -87,22 +117,49 @@ namespace ClientManagementSystem.DAL.Repositories
             return addresses;
         }
 
+        public List<AddressType> GetAllAddressTypes()
+        {
+            List<AddressType> AddressTypeses = new List<AddressType>();
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                string query = @"SELECT * 
+                                FROM AddressTypes";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        AddressTypeses.Add(
+                            new AddressType
+                            {
+                                AddressTypeId = (int)reader["AddressTypeId"],
+                                TypeName = (string)reader["TypeName"],
+                            }
+                        );
+                    }
+                }
+            }
+            return AddressTypeses;
+        }
+
         public void UpdateAddress(Address address)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
-                string query = @"UPDATE Address SET ClientId = @ClientId, AddressType = @AddressType, AddressLine1 = @AddressLine1, AddressLine2 = @AddressLine2, City = @City, State = @State, ZipCode = @ZipCode
-                                WHERE Id = @Id";
+                string query = @"UPDATE Address 
+                                SET ClientId = @ClientId, 
+                                AddressTypeId = @AddressTypeId, 
+                                AddressDetail = @AddressDetail, 
+                                WHERE AddressId = @AddressId";
 
                 SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@Id", address.Id);
+                cmd.Parameters.AddWithValue("@AddressId", address.AddressId);
                 cmd.Parameters.AddWithValue("@ClientId", address.ClientId);
-                cmd.Parameters.AddWithValue("@AddressType", address.AddressType);
-                cmd.Parameters.AddWithValue("@AddressLine1", address.AddressLine1);
-                cmd.Parameters.AddWithValue("@AddressLine2", address.AddressLine2);
-                cmd.Parameters.AddWithValue("@City", address.City);
-                cmd.Parameters.AddWithValue("@State", address.State);
-                cmd.Parameters.AddWithValue("@ZipCode", address.ZipCode);
+                cmd.Parameters.AddWithValue("@AddressTypeId", address.AddressTypeId);
+                cmd.Parameters.AddWithValue("@AddressDetail", address.AddressDetail);
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -112,10 +169,10 @@ namespace ClientManagementSystem.DAL.Repositories
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
-                string query = "DELETE FROM Address WHERE Id = @Id";
+                string query = "DELETE FROM Address WHERE AddressId = @AddressId";
 
                 SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@Id", addressId);
+                cmd.Parameters.AddWithValue("@AddressId", addressId);
                 con.Open();
                 cmd.ExecuteNonQuery();
             }

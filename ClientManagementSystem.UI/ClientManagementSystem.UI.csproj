@@ -194,10 +194,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Connected Services\ClientManagementServiceReference\ClientManagementSystem.UI.ClientManagementServiceReference.Address.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ClientManagementServiceReference\ClientManagementSystem.UI.ClientManagementServiceReference.AddressType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <Content Include="Connected Services\ClientManagementServiceReference\ClientManagementSystem.UI.ClientManagementServiceReference.Client.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <None Include="Connected Services\ClientManagementServiceReference\item.disco" />
     <None Include="Connected Services\ClientManagementServiceReference\configuration91.svcinfo" />
     <None Include="Connected Services\ClientManagementServiceReference\configuration.svcinfo" />
     <None Include="Connected Services\ClientManagementServiceReference\Reference.svcmap">
@@ -223,22 +228,22 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <None Include="Connected Services\ClientManagementServiceReference\ClientManagementService.wsdl" />
-    <None Include="Connected Services\ClientManagementServiceReference\item.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\ClientManagementServiceReference\item1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\ClientManagementServiceReference\item2.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Connected Services\ClientManagementServiceReference\ClientManagementSystem.DAL.Models.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ClientManagementServiceReference\service.wsdl" />
+    <None Include="Connected Services\ClientManagementServiceReference\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ClientManagementServiceReference\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

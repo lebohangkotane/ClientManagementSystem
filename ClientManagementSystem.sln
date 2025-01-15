@@ -13,6 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientManagementSystem.DAL"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientManagementSystem.UI", "ClientManagementSystem.UI\ClientManagementSystem.UI.csproj", "{CF2C51F7-C195-4294-82C4-45D515B6DD54}"
 	ProjectSection(ProjectDependencies) = postProject
+		{097FF3F4-C8C6-48FB-82F2-4F9E4F87BCCE} = {097FF3F4-C8C6-48FB-82F2-4F9E4F87BCCE}
 		{D76A84BF-EB78-42DA-BC90-0646A2F69E13} = {D76A84BF-EB78-42DA-BC90-0646A2F69E13}
 	EndProjectSection
 EndProject
