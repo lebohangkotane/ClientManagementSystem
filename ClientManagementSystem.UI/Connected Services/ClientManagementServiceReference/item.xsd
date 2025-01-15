@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8733/Design_Time_Addresses/ClientManagementService/Service1/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ClientManagementSystem.DAL.Models" />
+  <xs:element name="AddClient">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/ClientManagementSystem.DAL.Models" minOccurs="0" name="client" nillable="true" type="q1:Client" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddClientResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetClient">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="clientId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetClientResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ClientManagementSystem.DAL.Models" minOccurs="0" name="GetClientResult" nillable="true" type="q2:Client" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllClients">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllClientsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/ClientManagementSystem.DAL.Models" minOccurs="0" name="GetAllClientsResult" nillable="true" type="q3:ArrayOfClient" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateClient">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/ClientManagementSystem.DAL.Models" minOccurs="0" name="client" nillable="true" type="q4:Client" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateClientResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteClient">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="clientId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteClientResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
