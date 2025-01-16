@@ -186,6 +186,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ExportToCSV.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\AddressType.cs" />
     <Compile Include="Models\Client.cs" />

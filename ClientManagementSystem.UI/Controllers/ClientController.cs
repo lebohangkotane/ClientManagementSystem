@@ -1,5 +1,7 @@
 ﻿using ClientManagementSystem.UI.ClientManagementServiceReference;
+using ClientManagementSystem.UI.Helpers;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -36,12 +38,18 @@ namespace ClientManagementSystem.UI.Controllers
         // GET: Client/Create
         public async Task<ActionResult> Create()
         {
+            var addressTypes = await _clientManagementService.GetAllAddressTypesAsync();
+            var contactTypes = await _clientManagementService.GetAllContactTypesAsync();
+
             var client = new Client
             {
-                AddressTypes = await _clientManagementService.GetAllAddressTypesAsync(),
+                AddressTypes = addressTypes,
+                Addresses = addressTypes.Select(x => new Address { AddressTypeId = x.AddressTypeId })
+                                        .ToList(),
+                ContactInfos = contactTypes.Select(ct => new ContactInfo { ContactTypeId = ct.ContactTypeId }).ToList(),
             };
 
-            ViewBag.ContactTypes = await _clientManagementService.GetAllContactTypesAsync();
+            ViewBag.ContactTypes = contactTypes;
 
             return View(client);
         }
@@ -53,7 +61,6 @@ namespace ClientManagementSystem.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 var clientId = await _clientManagementService.AddClientAsync(client);
 
                 //add addresses
@@ -61,20 +68,21 @@ namespace ClientManagementSystem.UI.Controllers
                 {
                     address.ClientId = clientId;
                     address.AddressTypeId = address.AddressTypeId;
-
-                    await _clientManagementService.AddAddressAsync(address);                    
+                    await _clientManagementService.AddAddressAsync(address);
                 }
 
                 //add contactInfo
                 foreach (var contactInfo in client.ContactInfos)
                 {
-                    contactInfo.ClientId = clientId;  
-                    
+                    contactInfo.ClientId = clientId;
                     await _clientManagementService.AddContactAsync(contactInfo);
                 }
 
                 return Json(new { success = true });
             }
+
+            client.AddressTypes = await _clientManagementService.GetAllAddressTypesAsync();
+            ViewBag.ContactTypes = await _clientManagementService.GetAllContactTypesAsync();
 
             return View(client);
         }
@@ -104,17 +112,9 @@ namespace ClientManagementSystem.UI.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    await _clientManagementService.UpdateClientAsync(client);
+                await _clientManagementService.UpdateClientAsync(client);
 
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (System.Exception ex)
-                {
-                    // Log the exception
-                    ModelState.AddModelError(string.Empty, $"An error occurred while updating the client: {ex.Message}");
-                }
+                return RedirectToAction(nameof(Index));
             }
 
             return View(client);
@@ -136,21 +136,39 @@ namespace ClientManagementSystem.UI.Controllers
         // POST: Client/Delete/5
         [HttpPost, ActionName(nameof(DeleteConfirmed))]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int ClientId)
+        public async Task<ActionResult> DeleteConfirmed(int clientId)
         {
-            try
-            {
-                await _clientManagementService.DeleteClientAsync(ClientId);
+            var clientAddresses = _clientManagementService.GetAllAddressesByClientId(clientId);
+            var clientContactInfo = _clientManagementService.GetAllContacts().Where(x=>x.ClientId == clientId);
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch (System.Exception ex)
+            foreach (var address in clientAddresses)
             {
-                // Log the exception
-                ModelState.AddModelError(string.Empty, $"An error occurred while deleting the client: {ex.Message}");
-
-                return RedirectToAction(nameof(Index));
+                await _clientManagementService.DeleteAddressAsync(address.AddressId);
             }
+
+            foreach (var contactInfo in clientContactInfo)
+            {
+                await _clientManagementService.DeleteContactAsync(contactInfo.ContactInfoId);
+            }
+
+            await _clientManagementService.DeleteClientAsync(clientId);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        // Export Clients and Addresses to CSV
+        public async Task<FileResult> Export()
+        {
+            ExportToCSV ExportToCSV = new ExportToCSV(); 
+
+            var csvData = await ExportToCSV.GenerateExportToCSV();
+            
+            var result = new FileContentResult(csvData, "text/csv")
+            {
+                FileDownloadName = "ClientsAndAddresses.csv"
+            };
+
+            return result;
         }
     }
 }

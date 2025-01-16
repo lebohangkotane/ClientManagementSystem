@@ -51,45 +51,42 @@
 
         <br />
 
-
-        @{
-            int i = 0;
-            List<ClientManagementSystem.UI.ClientManagementServiceReference.ContactType> contactTypes = ViewBag.ContactTypes;
-        }
-
         <h5>Addresses</h5>
 
-        @foreach (var addressType in Model.AddressTypes)
+        @for (int i = 0; i < Model.AddressTypes.Count(); i++)
         {
-            @Html.HiddenFor(m => m.AddressTypes[i].AddressTypeId)
+            @Html.HiddenFor(m => m.Addresses[i].AddressTypeId)
             <div class="form-group">
-                @Html.Label(addressType.TypeName, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label(Model.AddressTypes[i].TypeName, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(m => m.Addresses[i].AddressDetail, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(m => m.Addresses[i].AddressDetail, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-            i++;
         }
 
         <br />
-
+        
+        @{ 
+            var contactTypes = (List<ClientManagementSystem.UI.ClientManagementServiceReference.ContactType>)ViewBag.ContactTypes;
+        }
         <h5>Contact Information</h5>
-        @foreach (var contactType in contactTypes)
-        {
 
+        @for (int i = 0; i < Model.ContactInfos.Count; i++)
+        {
+            @Html.HiddenFor(m => m.ContactInfos[i].ContactTypeId)
+            var contactType = contactTypes.FirstOrDefault(ct => ct.ContactTypeId == Model.ContactInfos[i].ContactTypeId);
             <div class="form-group">
-                @Html.Label(contactType.TypeName, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
+                    @Html.LabelFor(m => m.ContactInfos[i].ContactDetail, contactType.TypeName, new { @class = "control-label col-md-2" })
                     @Html.EditorFor(m => m.ContactInfos[i].ContactDetail, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(m => m.Addresses[i].AddressDetail, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(m => m.ContactInfos[i].ContactDetail, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-            i++;
         }
+
         <br />
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-primary" />
